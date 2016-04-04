@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Tab demo</title>
+    <style>
+    .visuallyhidden {
+        position: absolute;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        padding: 0;
+        border: 0;
+    }
+    </style>
+</head>
+
+<body>
+    <h1>Tab demo</h1>
+    <div class="tab">
+        <div class="tab-wrapper">
+            <h3 class="tab-trigger">Titre du tab</h3>
+            <div class="tab-content">
+                <p>Lorem ipsum dolor sit amet, consectetur aus fugit expedita consequuntur eligendi aut debitis qui provident perspiciatis! Repellendus, ipsa reprehenderit placeat quod ratione qui nulla tempora quae incidunt mollitia quisquam quidem consequuntur libero odit doloremque eveniet consectetur earum cum excepturi necessitatibus.</p>
+            </div>
+        </div>
+        <div class="tab-wrapper">
+            <h3 class="tab-trigger">Titre du tab</h3>
+            <div class="tab-content">
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate, iure, dolorem, aperiam, voluptatibus duugit expedita consequuntur eligendi aut debitis qui provident perspiciatis! Repellendus, ipsa reprehenderit placeat quod ratione qui nulla tempora quae incidunt mollitia quisquam quidem consequuntur libero odit doloremque eveniet consectetur earum cum excepturi necessitatibus.</p>
+            </div>
+        </div>
+        <div class="tab-wrapper">
+            <h3 class="tab-trigger">Titre du tab</h3>
+            <div class="tab-content">
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate, iure, dolorem, aperiam, voluptatibus ducimus numquam dolor ex eius perspiciatis tenetur distinctio explicabo odio tempora qui odit. Rerum, delectus, sunt, deserunt praesentium velit ipsam quidem iusto molestias error minus recusandae saepe.</p>
+                <p>Quibusdam, natus, minus, dolorum eaque ullam necessitatibus fugit expedita consequuntur eligendi aut debitis qui provident perspiciatis! Repellendus, ipsa reprehenderit placeat quod ratione qui nulla tempora quae incidunt mollitia quisquam quidem consequuntur libero odit doloremque eveniet consectetur earum cum excepturi necessitatibus.</p>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="../bower_components/vtt-jquery-buttonize/dist/jquery.buttonize.js"></script>
+    <script type="text/javascript" src="../dist/jquery.tab.min.js"></script>
+    <script>
+    $('.tab').tab();
+    </script>
+</body>
+
+</html>
