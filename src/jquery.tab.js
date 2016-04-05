@@ -115,7 +115,7 @@
                 }
             });
             //Add unit
-            height += "px";
+            height = height/16 + "rem" ;
             return height;
         },
 
@@ -127,7 +127,7 @@
                 offset += this.tabTrigger.eq(i).outerWidth(true);
             }
             //Add unit
-            offset += "px";
+            offset = offset/16 + "rem";
             return offset; //.eminize();
         }
 
