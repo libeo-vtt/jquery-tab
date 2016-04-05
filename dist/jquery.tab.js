@@ -55,7 +55,7 @@
         init: function() {
             this.tab.css({
                 position: 'relative',
-                paddingTop: $(this.calculateHighestTabTrigger()).eminize()
+                paddingTop: this.calculateHighestTabTrigger()
             });
 
             // Hide all tabs content
@@ -114,7 +114,8 @@
                     height = $(el).outerHeight();
                 }
             });
-
+            //Add unit
+            height += "px";
             return height;
         },
 
@@ -125,7 +126,9 @@
             for (var i = 0; i < index; i++) {
                 offset += this.tabTrigger.eq(i).outerWidth(true);
             }
-            return $(offset).eminize();
+            //Add unit
+            offset += "px";
+            return offset; //.eminize();
         }
 
     });
