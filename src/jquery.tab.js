@@ -29,7 +29,7 @@
             clicked: 'is-clicked',
             extern: 'is-external',
             error: 'is-error'
-        }, this.config.customGlobalClasses || {});
+        }, (window.classes !== undefined ? window.classes : this.config.customGlobalClasses) || {});
 
         // Get the tabs wrapper
         this.tabWrapper = this.tab.find('.' + this.config.tabWrapperClass);
