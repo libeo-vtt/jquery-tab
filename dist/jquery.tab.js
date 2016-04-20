@@ -5,46 +5,53 @@
     var Tab = function(element, options) {
         this.tab = $(element);
 
-        this.config = $.extend({
+        // Default module configuration
+        this.defaults = {
             defaultOpenedTab: 1,
             closeOnClick: false,
-            ariaTextClass: 'aria-text',
-            tabWrapperClass: 'tab-wrapper',
-            tabTriggerClass: 'tab-trigger',
-            tabContentClass: 'tab-content',
-            ariaText: 'Cliquer pour afficher cet onglet',
             onFocus: $.noop,
             beforeOpen: $.noop,
             afterOpen: $.noop,
             beforeClose: $.noop,
             afterClose: $.noop,
             onBlur: $.noop,
-            customGlobalClasses: {}
-        }, options || {});
+            labels: {
+                ariaText: 'Cliquer pour afficher cet onglet',
+            },
+            classes: {
+                ariaText: 'aria-text',
+                tabWrapper: 'tab-wrapper',
+                tabTrigger: 'tab-trigger',
+                tabContent: 'tab-content',
+                states: {
+                    active: 'is-active'
+                }
+            }
+        };
 
-        this.classes = $.extend({
-            active: 'is-active',
-            open: 'is-open',
-            hover: 'is-hover',
-            clicked: 'is-clicked',
-            extern: 'is-external',
-            error: 'is-error'
-        }, (window.classes !== undefined ? window.classes : this.config.customGlobalClasses) || {});
+        // Merge default classes with window.project.classes
+        this.classes = $.extend(true, this.defaults.classes, (window.project ? window.project.classes : {}));
+
+        // Merge default labels with window.project.labels
+        this.labels = $.extend(true, this.defaults.labels, (window.project ? window.project.labels : {}));
+
+        // Merge default config with custom config
+        this.config = $.extend(true, this.defaults, options || {});
 
         // Get the tabs wrapper
-        this.tabWrapper = this.tab.find('.' + this.config.tabWrapperClass);
+        this.tabWrapper = this.tab.find('.' + this.classes.tabWrapper);
 
         // Get the tab trigger and transform the tags in a <button> tag
-        this.tab.find('.' + this.config.tabTriggerClass).buttonize({
+        this.tab.find('.' + this.classes.tabTrigger).buttonize({
             a11y: this.config.a11y
         });
-        this.tabTrigger = this.tab.find('.' + this.config.tabTriggerClass);
+        this.tabTrigger = this.tab.find('.' + this.classes.tabTrigger);
 
         // Get the tab content
-        this.tabContent = this.tab.find('.' + this.config.tabContentClass);
+        this.tabContent = this.tab.find('.' + this.classes.tabContent);
 
         // Create and get the aria text
-        this.tabTrigger.append('<span class="' + this.config.ariaTextClass + ' visuallyhidden">' + this.config.ariaText + '</span>');
+        this.tabTrigger.append('<span class="' + this.classes.ariaText + ' visuallyhidden">' + this.labels.ariaText + '</span>');
 
         this.init();
     };
@@ -73,11 +80,11 @@
             // Click events
             this.tabTrigger.on('click', $.proxy(function(e) {
                 var element = e.currentTarget;
-                if (!$(element).parents('.' + this.config.tabWrapperClass).hasClass(this.classes.active)) {
-                    this.changeTab($(element).parents('.' + this.config.tabWrapperClass).index());
+                if (!$(element).parents('.' + this.classes.tabWrapper).hasClass(this.classes.active)) {
+                    this.changeTab($(element).parents('.' + this.classes.tabWrapper).index());
                 } else if (this.config.closeOnClick) {
                     this.tabContent.hide();
-                    $(element).parents('.' + this.config.tabWrapperClass).removeClass(this.classes.active);
+                    $(element).parents('.' + this.classes.tabWrapper).removeClass(this.classes.active);
                 }
             }, this));
 
@@ -100,7 +107,7 @@
         // Function to change active tab
         changeTab: function(index) {
             this.tabContent.hide();
-            this.tabWrapper.eq(index).find('.' + this.config.tabContentClass).show();
+            this.tabWrapper.eq(index).find('.' + this.classes.tabContent).show();
             this.tabWrapper.removeClass(this.classes.active).eq(index).addClass(this.classes.active);
             this.tabTrigger.removeClass(this.classes.active).eq(index).addClass(this.classes.active);
         },
