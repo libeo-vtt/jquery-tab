@@ -1,5 +1,5 @@
-# VTT jQuery Tab Plugin
-A jQuery tabs plugin.
+# jQuery Tab Plugin
+Accessible, responsive and configurable jQuery tab plugin
 
 ## Usage
 
@@ -18,7 +18,7 @@ A jQuery tabs plugin.
 3. Call the plugin:
 
 	```javascript
-	$("#element").tab({
+	$('#element').tab({
 		// config
 	});
 	```
