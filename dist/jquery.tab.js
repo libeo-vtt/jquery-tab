@@ -80,11 +80,11 @@
             // Click events
             this.tabTrigger.on('click', $.proxy(function(e) {
                 var element = e.currentTarget;
-                if (!$(element).parents('.' + this.classes.tabWrapper).hasClass(this.classes.active)) {
+                if (!$(element).parents('.' + this.classes.tabWrapper).hasClass(this.classes.states.active)) {
                     this.changeTab($(element).parents('.' + this.classes.tabWrapper).index());
                 } else if (this.config.closeOnClick) {
                     this.tabContent.hide();
-                    $(element).parents('.' + this.classes.tabWrapper).removeClass(this.classes.active);
+                    $(element).parents('.' + this.classes.tabWrapper).removeClass(this.classes.states.active);
                 }
             }, this));
 
@@ -108,8 +108,8 @@
         changeTab: function(index) {
             this.tabContent.hide();
             this.tabWrapper.eq(index).find('.' + this.classes.tabContent).show();
-            this.tabWrapper.removeClass(this.classes.active).eq(index).addClass(this.classes.active);
-            this.tabTrigger.removeClass(this.classes.active).eq(index).addClass(this.classes.active);
+            this.tabWrapper.removeClass(this.classes.states.active).eq(index).addClass(this.classes.states.active);
+            this.tabTrigger.removeClass(this.classes.states.active).eq(index).addClass(this.classes.states.active);
         },
 
         // Function to calculate the height of the highest tab trigger
