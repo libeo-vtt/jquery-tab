@@ -45,6 +45,11 @@
         this.tab.find('.' + this.classes.tabTrigger).buttonize({
             a11y: this.config.a11y
         });
+
+        // Add type button so no submit is triggered on click of the buttons
+        this.tab.find('.' + this.classes.tabTrigger).attr('type', 'button');
+
+        // Get all the tab triggers
         this.tabTrigger = this.tab.find('.' + this.classes.tabTrigger);
 
         // Get the tab content
