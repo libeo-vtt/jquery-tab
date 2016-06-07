@@ -99,6 +99,9 @@
             if(this.config.adjustOnResize) {
                 $(window).on('resize', $.proxy(function() {
                     this.waitForFinalEvent($.proxy(function(){
+                        this.tab.css({
+                            paddingTop: this.calculateHighestTabTrigger()
+                        });
                         this.adjustTabTrigger();
                     },this), 250, "adjustTabTrigger");
                 }, this));
