@@ -13,7 +13,7 @@
   ],
   "dependencies": {
     "jquery": "^2.2.2",
-    "vtt-jquery-buttonize": "https://github.com/libeo-vtt/jquery-buttonize.git"
+    "vtt-jquery-buttonize": "https://github.com/libeo-vtt/jquery-buttonize.git",
   },
   "keywords": "tabs, tab, jquery, plugin"
 }

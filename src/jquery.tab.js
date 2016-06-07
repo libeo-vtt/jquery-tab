@@ -9,6 +9,7 @@
         this.defaults = {
             defaultOpenedTab: 1,
             closeOnClick: false,
+            adjustOnResize: true,
             onFocus: $.noop,
             beforeOpen: $.noop,
             afterOpen: $.noop,
@@ -74,6 +75,7 @@
             this.tabContent.hide();
 
             this.changeTab(this.config.defaultOpenedTab - 1);
+
             // Bind events
             this.bindEvents();
             // Initialize tabTrigger positions
@@ -92,6 +94,15 @@
                     $(element).parents('.' + this.classes.tabWrapper).removeClass(this.classes.states.active);
                 }
             }, this));
+
+            // Window resize events
+            if(this.config.adjustOnResize) {
+                $(window).on('resize', $.proxy(function() {
+                    this.waitForFinalEvent($.proxy(function(){
+                        this.adjustTabTrigger();
+                    },this), 250, "adjustTabTrigger");
+                }, this));
+            }
 
             // Focus events
             this.tabTrigger.on('focus', this.config.onFocus);
@@ -141,8 +152,21 @@
             //Add unit
             offset = offset/16 + "rem";
             return offset; //.eminize();
-        }
+        },
 
+        // Source: http://stackoverflow.com/a/4541963/2196908
+        waitForFinalEvent: function () {
+          var timers = {};
+          return function (callback, ms, uniqueId) {
+            if (!uniqueId) {
+              uniqueId = "Don't call this twice without a uniqueId";
+            }
+            if (timers[uniqueId]) {
+              clearTimeout (timers[uniqueId]);
+            }
+            timers[uniqueId] = setTimeout(callback, ms);
+          };
+        }()
     });
 
     $.fn.tab = function(options) {
