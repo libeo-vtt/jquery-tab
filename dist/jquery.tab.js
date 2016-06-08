@@ -17,7 +17,7 @@
             afterClose: $.noop,
             onBlur: $.noop,
             labels: {
-                ariaText: 'Cliquer pour afficher cet onglet',
+                ariaText: 'Cliquer pour afficher cet onglet'
             },
             classes: {
                 ariaText: 'aria-text',
@@ -88,22 +88,26 @@
             this.tabTrigger.on('click', $.proxy(function(e) {
                 var element = e.currentTarget;
                 if (!$(element).parents('.' + this.classes.tabWrapper).hasClass(this.classes.states.active)) {
+                    this.config.beforeOpen();
                     this.changeTab($(element).parents('.' + this.classes.tabWrapper).index());
+                    this.config.afterOpen();
                 } else if (this.config.closeOnClick) {
+                    this.config.beforeClose();
                     this.tabContent.hide();
                     $(element).parents('.' + this.classes.tabWrapper).removeClass(this.classes.states.active);
+                    this.config.afterClose();
                 }
             }, this));
 
             // Window resize events
-            if(this.config.adjustOnResize) {
+            if (this.config.adjustOnResize) {
                 $(window).on('resize', $.proxy(function() {
-                    this.waitForFinalEvent($.proxy(function(){
+                    this.waitForFinalEvent($.proxy(function() {
                         this.tab.css({
                             paddingTop: this.calculateHighestTabTrigger()
                         });
                         this.adjustTabTrigger();
-                    },this), 250, "adjustTabTrigger");
+                    }, this), 250, 'adjustTabTrigger');
                 }, this));
             }
 
@@ -140,8 +144,8 @@
                     height = $(el).outerHeight();
                 }
             });
-            //Add unit
-            height = height/16 + "rem" ;
+            // Add unit
+            height = height / 16 + 'rem';
             return height;
         },
 
@@ -152,23 +156,23 @@
             for (var i = 0; i < index; i++) {
                 offset += this.tabTrigger.eq(i).outerWidth(true);
             }
-            //Add unit
-            offset = offset/16 + "rem";
+            // Add unit
+            offset = offset / 16 + 'rem';
             return offset; //.eminize();
         },
 
         // Source: http://stackoverflow.com/a/4541963/2196908
-        waitForFinalEvent: function () {
-          var timers = {};
-          return function (callback, ms, uniqueId) {
-            if (!uniqueId) {
-              uniqueId = "Don't call this twice without a uniqueId";
-            }
-            if (timers[uniqueId]) {
-              clearTimeout (timers[uniqueId]);
-            }
-            timers[uniqueId] = setTimeout(callback, ms);
-          };
+        waitForFinalEvent: function() {
+            var timers = {};
+            return function(callback, ms, uniqueId) {
+                if (!uniqueId) {
+                    uniqueId = 'Don\'t call this twice without a uniqueId';
+                }
+                if (timers[uniqueId]) {
+                    clearTimeout(timers[uniqueId]);
+                }
+                timers[uniqueId] = setTimeout(callback, ms);
+            };
         }()
     });
 
