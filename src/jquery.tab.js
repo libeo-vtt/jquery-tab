@@ -17,7 +17,8 @@
             afterClose: $.noop,
             onBlur: $.noop,
             labels: {
-                ariaText: 'Cliquer pour afficher cet onglet'
+                ariaText: 'Cliquer pour afficher cet onglet',
+                ariaTextActive: 'Onglet affiché'
             },
             classes: {
                 ariaText: 'aria-text',
@@ -57,7 +58,8 @@
         this.tabContent = this.tab.find('.' + this.classes.tabContent);
 
         // Create and get the aria text
-        this.tabTrigger.append('<span class="' + this.classes.ariaText + ' visuallyhidden">' + this.labels.ariaText + '</span>');
+        this.tabTrigger.append('<span aria-live="polite" class="' + this.classes.ariaText + ' visuallyhidden">' + this.labels.ariaText + '</span>');
+        this.tabTriggerAriaText = this.tabTrigger.find('.' + this.classes.ariaText);
 
         this.init();
     };
@@ -75,6 +77,9 @@
             this.tabContent.hide();
 
             this.changeTab(this.config.defaultOpenedTab - 1);
+
+            // Set AriaText
+            this.setAriaText();
 
             // Bind events
             this.bindEvents();
@@ -97,6 +102,7 @@
                     $(element).parents('.' + this.classes.tabWrapper).removeClass(this.classes.states.active);
                     this.config.afterClose();
                 }
+                this.setAriaText();
             }, this));
 
             // Window resize events
@@ -159,6 +165,16 @@
             // Add unit
             offset = offset / 16 + 'rem';
             return offset; //.eminize();
+        },
+
+        setAriaText: function() {
+            var self = this;
+            this.tabTriggerAriaText.text(this.labels.ariaText);
+            this.tabTriggerAriaText.each(function(index, element){
+                if ($(element).parents('.' + self.classes.tabWrapper).hasClass(self.classes.states.active)) {
+                    $(element).text(self.labels.ariaTextActive);
+                }
+            });
         },
 
         // Source: http://stackoverflow.com/a/4541963/2196908
