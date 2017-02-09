@@ -57,6 +57,9 @@
         // Get the tab content
         this.tabContent = this.tab.find('.' + this.classes.tabContent);
 
+        // Check for aria and labels on the HTML element - overwrite JS config
+        this.updatePluginText();
+
         // Create and get the aria text
         this.tabTrigger.append('<span aria-live="polite" class="' + this.classes.ariaText + ' visuallyhidden">' + this.labels.ariaText + '</span>');
         this.tabTriggerAriaText = this.tabTrigger.find('.' + this.classes.ariaText);
@@ -122,6 +125,22 @@
             this.tabTrigger.on('blur', this.config.onBlur);
         },
 
+        updatePluginText: function() {
+            // Loop through labels in config
+            $.each(this.config.labels, $.proxy(function(labelKey, labelText) {
+                // Loop through labels in element data attributes to see if it's set
+                $.each(this.tab.data(), $.proxy(function(dataLabelKey, dataLabelText) {
+                    var dataLabelKeyCamelCased = dataLabelKey.replace(/-([a-z])/g, function(g) {
+                        return g[1].toUpperCase();
+                    });
+                    // We have a match!
+                    if (dataLabelKeyCamelCased === labelKey) {
+                        this.config.labels[dataLabelKeyCamelCased] = dataLabelText;
+                    }
+                }, this));
+            }, this));
+        },
+
         // Initialize tabTrigger positions
         adjustTabTrigger: function() {
             this.tabTrigger.each($.proxy(function(index, el) {
@@ -170,7 +189,7 @@
         setAriaText: function() {
             var self = this;
             this.tabTriggerAriaText.text(this.labels.ariaText);
-            this.tabTriggerAriaText.each(function(index, element){
+            this.tabTriggerAriaText.each(function(index, element) {
                 if ($(element).parents('.' + self.classes.tabWrapper).hasClass(self.classes.states.active)) {
                     $(element).text(self.labels.ariaTextActive);
                 }
